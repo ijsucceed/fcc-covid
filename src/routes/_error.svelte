@@ -3,4 +3,38 @@
 	export let error;
 </script>
 
-<span>{error} {status}</span>
+<style>
+	.container {
+		margin: 40px;
+	}
+</style>
+
+<svelte:head>
+	<title>Error - {status}</title>
+</svelte:head>
+
+{#if status !== 404}
+	<div class="container">
+		<div class="message is-danger">
+			<div class="message-header">
+				<p>Error</p>
+			</div>
+			<div class="message-body">
+				{error.message}
+			</div>
+		</div>
+	</div>
+{/if}
+
+{#if status === 404}
+	<div class="container">
+		<div class="message is-warning">
+			<div class="message-header">
+				<p>Page Not Found</p>
+			</div>
+			<div class="message-body">
+				<a href="/">Click to go back home</a>
+			</div>
+		</div>
+	</div>
+{/if}
