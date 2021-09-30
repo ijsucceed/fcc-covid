@@ -6,9 +6,10 @@ import url from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
+import json from "@rollup/plugin-json";
+import css from 'rollup-plugin-css-only';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
-import css from 'rollup-plugin-css-only';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -42,6 +43,7 @@ export default {
 			css({ 
 				output: 'static/bundle.css'
 			}),
+			json(),
 			url({
 				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
 				publicPath: '/client/'
