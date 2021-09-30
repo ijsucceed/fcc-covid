@@ -12,7 +12,7 @@ function usStats(data) {
         hospitalized: format.number(usStatRaw.hospitalized),
         icu: format.number(usStatRaw.inIcuCurrently),
         tested: format.number(usStatRaw.totalTestResults),
-        updated: format.number(usStatRaw.lastModified)
+        updated: moment(usStatRaw.lastModified).format('LLL')
     }
 }
 

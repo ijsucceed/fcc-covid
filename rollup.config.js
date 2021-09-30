@@ -7,9 +7,9 @@ import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import json from "@rollup/plugin-json";
-import css from 'rollup-plugin-css-only';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import sveltePreprocess from 'svelte-preprocess';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -19,6 +19,18 @@ const onwarn = (warning, onwarn) =>
 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
 	onwarn(warning);
+
+const preprocess = sveltePreprocess({
+	scss: {
+		includePaths: [
+			'node_modules',
+        	'src'
+		],
+	},
+	postcss: {
+		plugins: [require('autoprefixer')],
+	},
+});
 
 export default {
 	client: {
@@ -36,12 +48,8 @@ export default {
 				compilerOptions: {
 					dev,
 					hydratable: true
-				}
-			}),
-			// we'll extract any component CSS out into
-			// a separate file - better for performance
-			css({ 
-				output: 'static/bundle.css'
+				},
+				preprocess
 			}),
 			json(),
 			url({
@@ -97,7 +105,8 @@ export default {
 					generate: 'ssr',
 					hydratable: true
 				},
-				emitCss: false
+				emitCss: true,
+				preprocess
 			}),
 			url({
 				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
@@ -113,23 +122,4 @@ export default {
 		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
-
-	serviceworker: {
-		input: config.serviceworker.input(),
-		output: config.serviceworker.output(),
-		plugins: [
-			resolve(),
-			replace({
-				preventAssignment: true,
-				values:{
-					'process.browser': true,
-					'process.env.NODE_ENV': JSON.stringify(mode)
-				},
-			}),
-			commonjs(),
-			!dev && terser()
-		],
-		preserveEntrySignatures: false,
-		onwarn,
-	}
 };

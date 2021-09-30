@@ -9,13 +9,14 @@
 
 <style>
 	@media(min-width: 769px) {
-		.nav {
+		nav {
 			border-bottom: 1px solid gray;
+			margin-bottom: 30px;
 		}
 	}
 </style>
 
-<nav class="navbar nav" role="navigation" aria-label="main-navigation">
+<nav class="navbar" role="navigation" aria-label="main-navigation">
 	<div class="navbar-brand">
 		<a href="/" class="navbar-item">
 			<img src="logo.png" height="38px" width="38px" alt="Covid 19">

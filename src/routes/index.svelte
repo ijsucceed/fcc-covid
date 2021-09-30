@@ -19,7 +19,11 @@ export let usStats;
 console.log(usStats, 'usStats');
 </script>
 
-
+<style>
+	h1 {
+		color: blue;
+	}
+</style>
 
 <svelte:head>
 	<title>Covid 19 US Tracker</title>
@@ -27,11 +31,11 @@ console.log(usStats, 'usStats');
 
 <section class="header">
 	<div class="container">
-		<h1>Covid 19 - US Tracker</h1>
+		<h1 class="title">Covid 19 - US Tracker</h1>
 	</div>
 </section>
 
-<CovidStat />
+<CovidStat {...usStats}/>
 <CovidChart />
 <TableContainer />
 	
