@@ -1,4 +1,5 @@
 //import axios from 'axios';
+import dailyData from './dailyData';
 import parsers from './parsers';
 import stateStatsData from './stateStats';
 
@@ -10,13 +11,16 @@ async function usStats() {
 
 async function stateStats(state) {
     const data = stateStatsData;
-
-    console.log(data, 'some data');
-
     return parsers.stateStats(state, data);
+}
+
+async function historicUS() {
+    const data = dailyData;
+    return parsers.historicUS(data);
 }
 
 export default {
     usStats,
     stateStats,
+    historicUS
 }
