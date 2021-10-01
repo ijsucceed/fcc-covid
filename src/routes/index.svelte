@@ -3,7 +3,6 @@
 
 	export async function preload() {
 		try {
-			throw new Error("This is bad :(");
 			const usStats = await requests.usStats();
 
 			return { usStats };
@@ -23,7 +22,6 @@ import CovidStat from "../components/CovidStat.svelte";
 import TableContainer from "../components/TableContainer.svelte";
 
 export let usStats;
-console.log(usStats, 'usStats');
 </script>
 
 <style>
@@ -42,7 +40,7 @@ console.log(usStats, 'usStats');
 	</div>
 </section>
 
-<CovidStat {...usStats}/>
+<CovidStat {...usStats} />
 <CovidChart />
 <TableContainer />
 	
